@@ -21,7 +21,7 @@ public class DefaultSecurityConfig {
             .csrf().disable() // Important: disable CSRF for non-browser POSTs
 
             .authorizeHttpRequests()
-            .requestMatchers("/.well-known/jwks.json","/api/v1/register","/api/v1/customer/register","/api/v1/auth/login",
+            .requestMatchers("/.well-known/jwks.json","/api/v1/register","/api/v1/customer/register","/api/v1/customers","/api/v1/auth/login",
                     "/oauth/token").permitAll()
             .requestMatchers("/health").permitAll() // Optional health check
                 .anyRequest().authenticated()
