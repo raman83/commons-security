@@ -10,6 +10,10 @@ import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 
@@ -19,13 +23,14 @@ public class DefaultSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("✅ DefaultSecurityConfig loaded in context");
-
+        http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests()
             .requestMatchers(
                 "/.well-known/jwks.json",
+                "/authuser/**",
                 "/api/v1/register",
                 "/api/v1/customer/register",
                 "/api/v1/customers",
@@ -66,6 +71,18 @@ public class DefaultSecurityConfig {
         return jwtConverter;
     }
     
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+    
     
     @Bean
     public BearerTokenResolver bearerTokenResolver() {
@@ -78,4 +95,7 @@ public class DefaultSecurityConfig {
     public void init() {
         System.out.println("🔒 Spring Security config initialized");
     }
+    
+    
+   
 }
