@@ -38,7 +38,7 @@ public class DefaultSecurityConfig {
                 "/api/v1/auth/m2mToken",
                 "/api/v1/auth/openBankToken",
                 "/oauth/token",
-                "/health"
+                "/api/v1/health"
             ).permitAll()
             .anyRequest().authenticated();
 

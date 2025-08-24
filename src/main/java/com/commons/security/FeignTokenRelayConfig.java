@@ -20,7 +20,7 @@ public class FeignTokenRelayConfig {
                     JwtAuthenticationToken jwtAuth = (JwtAuthenticationToken) authentication;
                     String tokenValue = jwtAuth.getToken().getTokenValue();
                     requestTemplate.header("Authorization", "Bearer " + tokenValue);
-                    // System.out.println("Forwarded token: " + tokenValue);
+                    System.out.println("Forwarded tokennnnnnnnnnnnnnnnnnnnn: " + tokenValue);
                 }
             }
         };
